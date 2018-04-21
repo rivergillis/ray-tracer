@@ -58,7 +58,7 @@ void InitRays() {
       std::pair<int, int> world_x_y = ImgToWorld(row, col);
       Point3D projection_point(world_x_y.first, world_x_y.second, kProjectionPlaneDistance);
 
-      rays[kX*row + col] = Ray3D(camera, projection_point);
+      rays.emplace_back(camera, projection_point);
     }
   }
 }
@@ -97,8 +97,8 @@ int main(int argc, char *argv[]) {
   InitRays();
 
   // Specify callback function
-  glutDisplayFunc(display);
-  glutKeyboardFunc(keyboard);
-  glutMainLoop();
+  //glutDisplayFunc(display);
+  //glutKeyboardFunc(keyboard);
+  //glutMainLoop();
   return 0;
 }
