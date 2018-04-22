@@ -36,8 +36,8 @@ std::vector<Sphere3D> spheres;
 
 Phong phong;
 // Light source
-Point3D light_location(10, 10, 5);
-Rgb light_color(0.7, 1.0, 0.7);
+Point3D light_location(200, 200, 20);
+Rgb light_color(1,1,1);
 
 std::pair<int, int> ImgToWorld(int img_x, int img_y) {
   // middle of image is (0,0,0) in world coordinates
@@ -73,7 +73,7 @@ void InitRays() {
 }
 
 void InitSpheres() {
-  spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0.9, 0.1, 0.1));
+  spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0, 1, 1));
 }
 
 void InitPhong() {
@@ -113,16 +113,12 @@ void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& norm
   phong.SetLight(light_color, intersection_to_light);
   phong.SetObject(sphere.Color(), sphere.A(), sphere.D(), sphere.S(), sphere.Alpha());
   Rgb shade = phong.GetShade(intersection_point, normal);
-  if (constants::kDebug) {
-    std::cout << "\tReturned " << shade.ToString() << std::endl;
-  }
+
+  // Set the color of the pixel
   std::vector<unsigned char> denormed = shade.Denormalized();
   image[x][y][0] = denormed[0];
   image[x][y][1] = denormed[1];
   image[x][y][2] = denormed[2];
-  if (constants::kDebug) {
-    std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(true) << std::endl;
-  }
 }
 
 void clearImage() {
