@@ -13,7 +13,7 @@ class Sphere3D
 
     std::string ToString() const;
 
-    bool GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal);
+    bool GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal) const;
 
   private:
     Point3D center_;

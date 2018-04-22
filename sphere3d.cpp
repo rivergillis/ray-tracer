@@ -10,7 +10,7 @@ std::string Sphere3D::ToString() const {
   return os.str();
 }
 
-bool Sphere3D::GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal) {
+bool Sphere3D::GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal) const {
   double discriminant = pow(ray.Dir().Dot(center_.VecTo(ray.Origin())), 2) - 
     pow(center_.VecTo(ray.Origin()).Magnitude(), 2) +
     radius_ * radius_;

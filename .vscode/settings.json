@@ -3,6 +3,9 @@
     "tuple": "cpp",
     "type_traits": "cpp",
     "utility": "cpp",
-    "memory": "cpp"
+    "memory": "cpp",
+    "random": "cpp",
+    "iterator": "cpp",
+    "sstream": "cpp"
   }
 }

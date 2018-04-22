@@ -76,8 +76,24 @@ void InitPhong() {
   // SetLight has to be done on the surface
 }
 
+// Cast the ray until we reach the limit on any axis
 void CastRay(const Ray3D& ray) {
+  Point3D closest_intersection(0,0,0);
+  Vec3D normal_of_closest(0,0,0);
+  bool has_intersected = false;
 
+  for (const Sphere3D& sphere : spheres) {
+    Point3D intersection_point(0,0,0);
+    Vec3D intersection_normal(0,0,0);
+    if (sphere.GetIntersection(ray, intersection_point, intersection_normal)) {
+      has_intersected = true;
+      // Only want sphere that was first hit
+      if (intersection_point.getZ() < closest_intersection.getZ()) {
+        closest_intersection = intersection_point;
+        normal_of_closest = intersection_normal;
+      }
+    }
+  }
 }
 
 void display() {
