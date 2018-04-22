@@ -2,6 +2,7 @@
 #define RGB_H_
 
 #include <string>
+#include <vector>
 
 class Rgb {
   public:
@@ -23,6 +24,8 @@ class Rgb {
     double getB() const {
       return b_;
     }
+
+    std::vector<unsigned char> Denormalized() const;
 
     unsigned char DenormR() const;
     unsigned char DenormG() const;

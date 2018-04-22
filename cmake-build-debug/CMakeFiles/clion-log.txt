@@ -1,0 +1,4 @@
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/river/Documents/hw/graphics/hw6clion
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/river/Documents/hw/graphics/hw6clion/cmake-build-debug

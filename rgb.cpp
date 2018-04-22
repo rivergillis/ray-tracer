@@ -41,6 +41,15 @@ Rgb Rgb::Normalized() const {
   };
 }
 
+std::vector<unsigned char> Rgb::Denormalized() const {
+  std::vector<unsigned char> result;
+  result.push_back(static_cast<unsigned char>(r_ * 255));
+  result.push_back(static_cast<unsigned char>(g_ * 255));
+  result.push_back(static_cast<unsigned char>(b_ * 255));
+  return result;
+}
+
+
 unsigned char Rgb::DenormR() const {
   return static_cast<unsigned char>(r_ * 255);
 }

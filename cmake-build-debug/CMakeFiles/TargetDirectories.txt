@@ -1,0 +1,3 @@
+/Users/river/Documents/hw/graphics/hw6clion/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/river/Documents/hw/graphics/hw6clion/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/river/Documents/hw/graphics/hw6clion/cmake-build-debug/CMakeFiles/hw6clion.dir

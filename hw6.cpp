@@ -11,6 +11,7 @@
 #include <utility>
 #include <cstdio>
 #include <cstdlib>
+#include <limits>
 #ifdef MAC
 #include <GLUT/glut.h>
 #else
@@ -25,7 +26,7 @@ unsigned char image[kX][kY][3];
 constexpr int kProjectionPlaneDistance = 0;
 
 // The camera is at (0,0,-distance)
-int distance = 8;
+int distance = 800;
 
 // Single-dimension vector. Address with kX*[row] + col
 std::vector<Ray3D> rays;
@@ -36,7 +37,7 @@ std::vector<Sphere3D> spheres;
 Phong phong;
 // Light source
 Point3D light_location(10, 10, 5);
-Rgb light_color(1.0, 1.0, 1.0);
+Rgb light_color(0.7, 1.0, 0.7);
 
 std::pair<int, int> ImgToWorld(int img_x, int img_y) {
   // middle of image is (0,0,0) in world coordinates
@@ -57,6 +58,7 @@ void init() {
 
 // Set up the rays to point from the camera to the projection plane
 void InitRays() {
+  rays.clear();
   Point3D camera(0, 0, -1 * distance);
 
   rays.reserve(kX * kY);
@@ -71,18 +73,16 @@ void InitRays() {
 }
 
 void InitSpheres() {
-  spheres.emplace_back(Point3D(0,0, 50), 54, 0.3, 0.4, 0.3, 4, Rgb(0.9, 0.1, 0.1));
+  spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0.9, 0.1, 0.1));
 }
 
 void InitPhong() {
-  // Ideally this information would be stored in the sphere object
   phong.SetCamera(Point3D(0, 0, -1 * distance));
-  // SetLight has to be done on the surface
 }
 
 // Cast the ray until we reach the limit on any axis
 int CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
-  Point3D closest_intersection(0,0,0);
+  Point3D closest_intersection(0,0,std::numeric_limits<double>::max());
   Vec3D normal_of_closest(0,0,0);
   int intersection_idx = -1;
 
@@ -92,7 +92,7 @@ int CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
     Vec3D intersection_normal(0,0,0);
     if (sphere.GetIntersection(ray, intersection_point, intersection_normal)) {
       // Only want sphere that was first hit
-      if (intersection_point.getZ() < closest_intersection.getZ()) {
+      if (intersection_point.getZ() <= closest_intersection.getZ()) {
         closest_intersection = intersection_point;
         normal_of_closest = intersection_normal;
         intersection_idx = i;
@@ -116,15 +116,28 @@ void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& norm
   if (constants::kDebug) {
     std::cout << "\tReturned " << shade.ToString() << std::endl;
   }
-  image[x][y][0] = shade.DenormR();
-  image[x][y][1] = shade.DenormG();
-  image[x][y][2] = shade.DenormB();
+  std::vector<unsigned char> denormed = shade.Denormalized();
+  image[x][y][0] = denormed[0];
+  image[x][y][1] = denormed[1];
+  image[x][y][2] = denormed[2];
   if (constants::kDebug) {
     std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(true) << std::endl;
   }
 }
 
+void clearImage() {
+  for (int row = 0; row < kX; row++) {
+    for (int col = 0; col < kY; col++) {
+      image[row][col][0] = 0;
+      image[row][col][1] = 0;
+      image[row][col][2] = 0;
+    }
+  }
+}
+
 void display() {
+  clearImage();
+
   for (int row = 0; row < kX; row++) {
     for (int col = 0; col < kY; col++) {
       Ray3D ray = rays[kX*row + col];
@@ -133,6 +146,7 @@ void display() {
       Vec3D intersection_normal(0,0,0);
       int sphere_index = CastRay(ray, &intersection_point, &intersection_normal);
       if (sphere_index != -1) {
+        // std::cout << "ray intersected\n";
         SetImage(row, col, intersection_point, intersection_normal, spheres[sphere_index]);
       }
     }
@@ -149,9 +163,14 @@ void keyboard(unsigned char key, int x, int y) {
   // End program
   if (key == 'q') {
     exit(0);
+  } else if (key == 'w') {
+    distance -= 500;
+  } else if (key == 's') {
+    distance += 500;
   }
 
-  // TO BE ADDED
+  InitPhong();
+  InitRays();
 
   // Display image
   glutPostRedisplay();

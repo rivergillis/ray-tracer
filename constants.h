@@ -2,7 +2,7 @@
 #define CONSTANTS_H_
 
 namespace constants {
-  constexpr bool kDebug = true;
+  constexpr bool kDebug = false;
 }
 
 #endif // CONSTANTS_H_
