@@ -16,19 +16,23 @@
 #include <GL/glut.h>
 #endif
 
-// Global variables
 constexpr int kX = 800;
 constexpr int kY = 800;
 unsigned char image[kX][kY][3];
-
-// Single-dimension vector. Address with kX*[row] + col
-std::vector<Ray3D> rays;
 
 // Projection plane is at (0, 0, 0) on Z = 0
 constexpr int kProjectionPlaneDistance = 0;
 
 // The camera is at (0,0,-distance)
 int distance = 8;
+
+// Single-dimension vector. Address with kX*[row] + col
+std::vector<Ray3D> rays;
+
+// The list of spheres to render
+std::vector<Sphere3D> spheres;
+
+Phong phong;
 
 std::pair<int, int> ImgToWorld(int img_x, int img_y) {
   // middle of image is (0,0,0) in world coordinates
@@ -54,7 +58,6 @@ void InitRays() {
   rays.reserve(kX * kY);
   for (int row = 0; row < kX; row++) {
     for (int col = 0; col < kY; col++) {
-      //std::cout << "(" << kX*row+col << ") row: " << row << "col: " << col << std::endl;
       std::pair<int, int> world_x_y = ImgToWorld(row, col);
       Point3D projection_point(world_x_y.first, world_x_y.second, kProjectionPlaneDistance);
 
@@ -63,8 +66,24 @@ void InitRays() {
   }
 }
 
+void InitSpheres() {
+  spheres.emplace_back(Point3D(0,0,10), 5, 0.3, 0.4, 0.3, 4, Rgb(0.9, 0.1, 0.1));
+}
+
+void InitPhong() {
+  // Ideally this information would be stored in the sphere object
+  phong.SetCamera(Point3D(0, 0, -1 * distance));
+  // SetLight has to be done on the surface
+}
+
+void CastRay(const Ray3D& ray) {
+
+}
+
 void display() {
-  // TO BE ADDED
+  for (const Ray3D& ray : rays) {
+    CastRay(ray);
+  }
 
   // Display image
   glClear(GL_COLOR_BUFFER_BIT);
@@ -95,6 +114,8 @@ int main(int argc, char *argv[]) {
   init();
 
   InitRays();
+  InitSpheres();
+  InitPhong();
 
   // Specify callback function
   //glutDisplayFunc(display);

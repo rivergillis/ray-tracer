@@ -13,8 +13,8 @@ class Point3D {
   public:
     Point3D(double x, double y, double z = 0.0) : x_(x), y_(y), z_(z) {}
 
-    Point3D Add(Vec3D other);
-    Point3D Subtract(Point3D other);
+    Point3D Add(Vec3D other) const;
+    Point3D Subtract(Point3D other) const;
 
     double getX() const {
       return x_;

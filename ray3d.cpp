@@ -8,6 +8,6 @@ std::string Ray3D::ToString() const {
   return os.str();
 }
 
-Point3D Ray3D::GetSample(float t) {
+Point3D Ray3D::GetSample(float t) const {
   return point_.Add(dir_.Multiply(t));
 }

@@ -26,13 +26,13 @@ Vec3D Point3D::VecTo(Point3D other) const {
   };
 }
 
-Point3D Point3D::Add(Vec3D other) {
+Point3D Point3D::Add(Vec3D other) const {
   return {getX() + other.X(),
     getY() + other.Y(),
     getZ() + other.Z()};
 }
 
-Point3D Point3D::Subtract(Point3D other) {
+Point3D Point3D::Subtract(Point3D other) const {
   return {getX() - other.getX(),
     getY() - other.getY(),
     getZ() - other.getZ()};

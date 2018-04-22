@@ -4,11 +4,12 @@
 #include "point3d.h"
 #include "ray3d.h"
 #include "vec3d.h"
+#include "rgb.h"
 
 class Sphere3D
 {
   public:
-    Sphere3D(Point3D p, float r) : center_(p), radius_(r) {}
+    Sphere3D(Point3D p, float r, double a, double d, double s, double alpha, Rgb color) : center_(p), radius_(r), a_(a), d_(d), s_(s), alpha_(alpha), color_(color) {}
 
     std::string ToString() const;
 
@@ -17,6 +18,12 @@ class Sphere3D
   private:
     Point3D center_;
     float radius_;
+
+    double a_;
+    double d_;
+    double s_;
+    double alpha_;
+    Rgb color_;
 };
 
 #endif

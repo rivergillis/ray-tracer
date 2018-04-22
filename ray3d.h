@@ -16,7 +16,7 @@ class Ray3D {
     Vec3D Dir() const { return dir_; }
     Point3D Origin() const { return point_; }
 
-    Point3D GetSample(float t);
+    Point3D GetSample(float t) const;
 
     std::string ToString() const;
 
