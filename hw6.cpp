@@ -74,6 +74,9 @@ void InitRays() {
 
 void InitSpheres() {
   spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0, 1, 1));
+  spheres.emplace_back(Point3D(-300, 100, 200), 100, 0.3, 0.4, 0.3, 4, Rgb(1, 0, 1));
+  spheres.emplace_back(Point3D(100, -300, 200), 100, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
+  spheres.emplace_back(Point3D(300, 0, 100), 120, 0.3, 0.4, 0.3, 4, Rgb(1, 1, 1));
 }
 
 void InitPhong() {
