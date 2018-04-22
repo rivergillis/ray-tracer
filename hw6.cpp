@@ -80,20 +80,21 @@ void InitPhong() {
 }
 
 // Cast the ray until we reach the limit on any axis
-bool CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal, Sphere3D* intersected) {
+bool CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
   Point3D closest_intersection(0,0,0);
   Vec3D normal_of_closest(0,0,0);
-  Sphere3D* intersected_sphere = nullptr;
+  int intersection_idx = -1;
 
-  for (Sphere3D& sphere : spheres) {
+  for (int i = 0; i < spheres.size(); i++) {
+    Sphere3D sphere = spheres[i];
     Point3D intersection_point(0,0,0);
     Vec3D intersection_normal(0,0,0);
     if (sphere.GetIntersection(ray, intersection_point, intersection_normal)) {
-      intersected_sphere = &sphere;
       // Only want sphere that was first hit
       if (intersection_point.getZ() < closest_intersection.getZ()) {
         closest_intersection = intersection_point;
         normal_of_closest = intersection_normal;
+        intersection_idx = i;
       }
     }
   }
@@ -102,15 +103,14 @@ bool CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal, Sphere3D* i
   intersection->setY(closest_intersection.getY());
   intersection->setZ(closest_intersection.getZ());
   normal->Set(normal_of_closest);
-  intersected = intersected_sphere;
 
-  return intersected_sphere != nullptr;
+  return intersection_idx;
 }
 
-void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& normal, Sphere3D* sphere) {
+void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& normal, Sphere3D sphere) {
   Vec3D intersection_to_light = intersection_point.VecTo(light_location);
   phong.SetLight(light_color, intersection_to_light);
-  phong.SetObject(sphere->Color(), sphere->A(), sphere->D(), sphere->S(), sphere->Alpha());
+  phong.SetObject(sphere.Color(), sphere.A(), sphere.D(), sphere.S(), sphere.Alpha());
   Rgb shade = phong.GetShade(intersection_point, normal);
   image[x][y][0] = shade.DenormR();
   image[x][y][1] = shade.DenormG();
@@ -125,9 +125,9 @@ void display() {
 
       Point3D intersection_point(0,0,0);
       Vec3D intersection_normal(0,0,0);
-      Sphere3D* intersected_sphere = nullptr;
-      if (CastRay(ray, &intersection_point, &intersection_normal, intersected_sphere)) {
-        SetImage(row, col, intersection_point, intersection_normal, intersected_sphere);
+      int sphere_index = CastRay(ray, &intersection_point, &intersection_normal);
+      if (sphere_index != -1) {
+        SetImage(row, col, intersection_point, intersection_normal, spheres[sphere_index]);
       }
     }
   }
@@ -165,8 +165,8 @@ int main(int argc, char *argv[]) {
   InitPhong();
 
   // Specify callback function
-  //glutDisplayFunc(display);
-  //glutKeyboardFunc(keyboard);
-  //glutMainLoop();
+  glutDisplayFunc(display);
+  glutKeyboardFunc(keyboard);
+  glutMainLoop();
   return 0;
 }
