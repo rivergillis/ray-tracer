@@ -34,4 +34,4 @@ rgb.o: rgb.h rgb.cpp constants.h
 	$(CC) $(CFLAGS) rgb.cpp
 
 clean:
-	rm *.o hw6
+	rm *.o hw6 *.gch

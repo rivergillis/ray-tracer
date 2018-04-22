@@ -15,7 +15,7 @@ void Phong::SetCamera(Point3D location) {
 
 void Phong::SetLight(Rgb color, Vec3D dir) {
   light_color_ = color;
-  light_direction_ = dir;
+  light_direction_ = dir.Normalized();
 }
 
 void Phong::SetObject(Rgb color, double a, double d, double s, double alpha) {

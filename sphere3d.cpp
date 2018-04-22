@@ -11,57 +11,38 @@ std::string Sphere3D::ToString() const {
 }
 
 bool Sphere3D::GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal) const {
-  // std::cout << "x: " << this->ToString() << " " << ray.ToString() << std::endl;
-  double discriminant = pow(ray.Dir().Dot(center_.VecTo(ray.Origin())), 2) - 
-    pow(center_.VecTo(ray.Origin()).Magnitude(), 2) +
-    radius_ * radius_;
+  Vec3D OriginToCenter = center_.VecTo(ray.Origin());
+  double A = ray.Dir().Dot(ray.Dir());
+  double B = 2 * OriginToCenter.Dot(ray.Dir());
+  double C = OriginToCenter.Dot(OriginToCenter) - radius_ * radius_;
+  double discriminant = B * B - 4 * A * C;
 
   if (discriminant < 0) {
     return false;
   }
+  // Calculate the two roots
+  double root1 = (-B - sqrt(discriminant)) / 2 * A;
+  double root2 = (-B + sqrt(discriminant)) / 2 * A;
+  double solution = 0;
 
-  double neg_b = -(ray.Dir().Dot(center_.VecTo(ray.Origin())));
-
-  if (discriminant == 0) {
-    // intersection is behind us, don't bother calculating normal or point
-    if (neg_b < 0) {
-      return false;
-    }
-    // Calculate and set intersection point
-    Point3D touch = ray.GetSample(neg_b);
-    point.setX(touch.getX());
-    point.setY(touch.getY());
-    point.setZ(touch.getZ());
-
-    // calculate and set normal
-    Vec3D touch_normal = center_.VecTo(touch).Normalized();
-    normal.Set(touch_normal);
-    return true;
-  } else {
-    double first = neg_b + sqrt(discriminant);
-    double second = neg_b - sqrt(discriminant);
-    Point3D touch(0, 0, 0);
-
-    if (first < 0 && second < 0) {
-      // both intersections behind ray
-      return false;
-    } else if (first < 0) {
-      touch = ray.GetSample(second);
-    } else if (second < 0) {
-      touch = ray.GetSample(first);
-    } else if (first < second) {
-      touch = ray.GetSample(first);
-    } else {
-      touch = ray.GetSample(second);
-    }
-
-    point.setX(touch.getX());
-    point.setY(touch.getY());
-    point.setZ(touch.getZ());
-
-    // calculate and set normal
-    Vec3D touch_normal = center_.VecTo(touch).Normalized();
-    normal.Set(touch_normal);
-    return true;
+  // No positive roots
+  if ((root1 < 0) && (root2 < 0)) {
+    return false;
+  } else if ((root1 < 0) && (root2 >= 0)) {
+    solution = root2;
+  } else if ((root2 < 0) && (root1 >= 0)) {
+    solution = root1;
+  } else if (root1 <= root2) {
+    solution = root1;
+  } else if (root2 <= root1) {
+    solution = root2;
   }
+
+  // set the intersection point
+  point = ray.GetSample(solution);
+
+  // set the normal
+  normal.Set(center_.VecTo(point).Normalized());
+  return true;
+
 }
