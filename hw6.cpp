@@ -4,6 +4,7 @@
 #include "sphere3d.h"
 #include "rgb.h"
 #include "phong.h"
+#include "constants.h"
 
 #include <iostream>
 #include <vector>
@@ -112,11 +113,15 @@ void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& norm
   phong.SetLight(light_color, intersection_to_light);
   phong.SetObject(sphere.Color(), sphere.A(), sphere.D(), sphere.S(), sphere.Alpha());
   Rgb shade = phong.GetShade(intersection_point, normal);
-  std::cout << "\tReturned " << shade.ToString() << std::endl;
+  if (constants::kDebug) {
+    std::cout << "\tReturned " << shade.ToString() << std::endl;
+  }
   image[x][y][0] = shade.DenormR();
   image[x][y][1] = shade.DenormG();
   image[x][y][2] = shade.DenormB();
-  // std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(false) << std::endl;
+  if (constants::kDebug) {
+    std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(true) << std::endl;
+  }
 }
 
 void display() {
