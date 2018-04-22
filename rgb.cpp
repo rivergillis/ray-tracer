@@ -52,7 +52,7 @@ unsigned char Rgb::DenormB() const {
 }
 
 
-std::string Rgb::ToString(bool denormal) {
+std::string Rgb::ToString(bool denormal) const {
   std::ostringstream os;
   if (denormal) {
     os << "RGB(" << int(r_ * 255) << ", " << int(g_ * 255) << ", " << int(b_ * 255) << ")";

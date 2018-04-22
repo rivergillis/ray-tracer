@@ -42,7 +42,7 @@ class Rgb {
 
     void MakeRandom();
 
-    std::string ToString(bool denormal = false);
+    std::string ToString(bool denormal = false) const;
 
   private:
     double r_;

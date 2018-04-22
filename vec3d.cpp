@@ -35,6 +35,9 @@ double Vec3D::Magnitude() const {
 }
 
 Vec3D Vec3D::Normalized() const {
+  if (Magnitude() <= 1) {
+    return *this;
+  }
   return Divide(Magnitude());
 }
 

@@ -70,7 +70,7 @@ void InitRays() {
 }
 
 void InitSpheres() {
-  spheres.emplace_back(Point3D(0,0,10), 5, 0.3, 0.4, 0.3, 4, Rgb(0.9, 0.1, 0.1));
+  spheres.emplace_back(Point3D(0,0, 50), 54, 0.3, 0.4, 0.3, 4, Rgb(0.9, 0.1, 0.1));
 }
 
 void InitPhong() {
@@ -80,7 +80,7 @@ void InitPhong() {
 }
 
 // Cast the ray until we reach the limit on any axis
-bool CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
+int CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
   Point3D closest_intersection(0,0,0);
   Vec3D normal_of_closest(0,0,0);
   int intersection_idx = -1;
@@ -112,10 +112,11 @@ void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& norm
   phong.SetLight(light_color, intersection_to_light);
   phong.SetObject(sphere.Color(), sphere.A(), sphere.D(), sphere.S(), sphere.Alpha());
   Rgb shade = phong.GetShade(intersection_point, normal);
+  std::cout << "\tReturned " << shade.ToString() << std::endl;
   image[x][y][0] = shade.DenormR();
   image[x][y][1] = shade.DenormG();
   image[x][y][2] = shade.DenormB();
-  std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(true) << std::endl;
+  // std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(false) << std::endl;
 }
 
 void display() {
