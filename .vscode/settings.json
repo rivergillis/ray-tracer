@@ -6,6 +6,8 @@
     "memory": "cpp",
     "random": "cpp",
     "iterator": "cpp",
-    "sstream": "cpp"
+    "sstream": "cpp",
+    "__config": "cpp",
+    "__nullptr": "cpp"
   }
 }

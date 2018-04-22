@@ -24,6 +24,10 @@ class Rgb {
       return b_;
     }
 
+    unsigned char DenormR() const;
+    unsigned char DenormG() const;
+    unsigned char DenormB() const;
+
     void setR(const double r) {
       r_ = r;
     }

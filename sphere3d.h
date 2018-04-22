@@ -15,6 +15,12 @@ class Sphere3D
 
     bool GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal) const;
 
+    double A() const { return a_; }
+    double D() const { return d_; }
+    double S() const { return s_; }
+    double Alpha() const { return alpha_; }
+    Rgb Color() const { return color_; }
+
   private:
     Point3D center_;
     float radius_;

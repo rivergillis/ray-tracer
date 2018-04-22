@@ -41,6 +41,16 @@ Rgb Rgb::Normalized() const {
   };
 }
 
+unsigned char Rgb::DenormR() const {
+  return static_cast<unsigned char>(r_ * 255);
+}
+unsigned char Rgb::DenormG() const {
+  return static_cast<unsigned char>(g_ * 255);
+}
+unsigned char Rgb::DenormB() const {
+  return static_cast<unsigned char>(b_ * 255);
+}
+
 
 std::string Rgb::ToString(bool denormal) {
   std::ostringstream os;

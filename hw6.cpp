@@ -33,6 +33,9 @@ std::vector<Ray3D> rays;
 std::vector<Sphere3D> spheres;
 
 Phong phong;
+// Light source
+Point3D light_location(10, 10, 5);
+Rgb light_color(1.0, 1.0, 1.0);
 
 std::pair<int, int> ImgToWorld(int img_x, int img_y) {
   // middle of image is (0,0,0) in world coordinates
@@ -77,16 +80,16 @@ void InitPhong() {
 }
 
 // Cast the ray until we reach the limit on any axis
-void CastRay(const Ray3D& ray) {
+bool CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal, Sphere3D* intersected) {
   Point3D closest_intersection(0,0,0);
   Vec3D normal_of_closest(0,0,0);
-  bool has_intersected = false;
+  Sphere3D* intersected_sphere = nullptr;
 
-  for (const Sphere3D& sphere : spheres) {
+  for (Sphere3D& sphere : spheres) {
     Point3D intersection_point(0,0,0);
     Vec3D intersection_normal(0,0,0);
     if (sphere.GetIntersection(ray, intersection_point, intersection_normal)) {
-      has_intersected = true;
+      intersected_sphere = &sphere;
       // Only want sphere that was first hit
       if (intersection_point.getZ() < closest_intersection.getZ()) {
         closest_intersection = intersection_point;
@@ -94,11 +97,39 @@ void CastRay(const Ray3D& ray) {
       }
     }
   }
+
+  intersection->setX(closest_intersection.getX());
+  intersection->setY(closest_intersection.getY());
+  intersection->setZ(closest_intersection.getZ());
+  normal->Set(normal_of_closest);
+  intersected = intersected_sphere;
+
+  return intersected_sphere != nullptr;
+}
+
+void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& normal, Sphere3D* sphere) {
+  Vec3D intersection_to_light = intersection_point.VecTo(light_location);
+  phong.SetLight(light_color, intersection_to_light);
+  phong.SetObject(sphere->Color(), sphere->A(), sphere->D(), sphere->S(), sphere->Alpha());
+  Rgb shade = phong.GetShade(intersection_point, normal);
+  image[x][y][0] = shade.DenormR();
+  image[x][y][1] = shade.DenormG();
+  image[x][y][2] = shade.DenormB();
+  std::cout << "set img x: " << x << " y: " << y << " - " << shade.ToString(true) << std::endl;
 }
 
 void display() {
-  for (const Ray3D& ray : rays) {
-    CastRay(ray);
+  for (int row = 0; row < kX; row++) {
+    for (int col = 0; col < kY; col++) {
+      Ray3D ray = rays[kX*row + col];
+
+      Point3D intersection_point(0,0,0);
+      Vec3D intersection_normal(0,0,0);
+      Sphere3D* intersected_sphere = nullptr;
+      if (CastRay(ray, &intersection_point, &intersection_normal, intersected_sphere)) {
+        SetImage(row, col, intersection_point, intersection_normal, intersected_sphere);
+      }
+    }
   }
 
   // Display image
