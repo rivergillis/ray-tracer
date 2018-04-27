@@ -13,8 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="05b3b836-ea87-4f7c-87aa-233869e8132b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/hw6.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hw6.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sphere3d.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/sphere3d.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sphere3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/sphere3d.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,8 +37,8 @@
       <file leaf-file-name="hw6.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hw6.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="199" column="26" selection-start-line="199" selection-start-column="26" selection-end-line="199" selection-end-column="26" />
+            <state relative-caret-position="284">
+              <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -105,11 +103,6 @@
               <item name="hw6clion" type="b2602c69:ProjectViewProjectNode" />
               <item name="hw6clion" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="hw6clion" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hw6clion" type="462c0819:PsiDirectoryNode" />
-              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -156,12 +149,12 @@
       <workItem from="1524416910439" duration="2470000" />
       <workItem from="1524422936040" duration="4300000" />
       <workItem from="1524453253765" duration="72000" />
-      <workItem from="1524843345704" duration="2133000" />
+      <workItem from="1524843345704" duration="2485000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10357000" />
+    <option name="totallyTimeSpent" value="10709000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="68" y="55" width="1332" height="778" extended-state="0" />
@@ -173,7 +166,7 @@
       <window_info anchor="bottom" id="CMake" order="7" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30837005" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30837005" />
       <window_info id="Structure" order="1" sideWeight="0.5014881" side_tool="true" weight="0.2548148" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -259,16 +252,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hw6.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="112" column="16" selection-start-line="112" selection-start-column="8" selection-end-line="112" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sphere3d.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -621,10 +604,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4279" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hw6.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="199" column="26" selection-start-line="199" selection-start-column="26" selection-end-line="199" selection-end-column="26" />
+        <state relative-caret-position="284">
+          <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

@@ -54,7 +54,9 @@ void init() {
 
   // Print command menu
   std::cout << "Program commands:\n"
-    << "   'q' - quit program\n";
+    << "\t'q' - quit program\n"
+    << "\t'w/a/s/d' - Move around spheres\n"
+    << "\t'h/j/k/l' - Move around light source\n";
 }
 
 // Set up the rays to point from the camera to the projection plane
@@ -76,8 +78,8 @@ void InitRays() {
 void InitSpheres() {
   spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0, 1, 1));
   spheres.emplace_back(Point3D(0, -400, 600), 100, 0.3, 0.4, 0.3, 4, Rgb(1, 0, 1));
-//  spheres.emplace_back(Point3D(100, -300, 200), 100, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
-//  spheres.emplace_back(Point3D(300, 0, 100), 120, 0.3, 0.4, 0.3, 4, Rgb(1, 1, 1));
+  spheres.emplace_back(Point3D(100, 400, 50), 20, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
+  spheres.emplace_back(Point3D(300, 0, 100), 120, 0.3, 0.4, 0.3, 4, Rgb(1, 1, 1));
 }
 
 void InitPhong() {
