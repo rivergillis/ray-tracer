@@ -20,6 +20,7 @@
 
 constexpr int kX = 800;
 constexpr int kY = 800;
+// Note: When rendered, image[0][0] is bottom-left hand corner
 unsigned char image[kX][kY][3];
 
 // Projection plane is at (0, 0, 0) on Z = 0
@@ -74,9 +75,9 @@ void InitRays() {
 
 void InitSpheres() {
   spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0, 1, 1));
-  spheres.emplace_back(Point3D(-300, 100, 200), 100, 0.3, 0.4, 0.3, 4, Rgb(1, 0, 1));
-  spheres.emplace_back(Point3D(100, -300, 200), 100, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
-  spheres.emplace_back(Point3D(300, 0, 100), 120, 0.3, 0.4, 0.3, 4, Rgb(1, 1, 1));
+  spheres.emplace_back(Point3D(0, -400, 600), 100, 0.3, 0.4, 0.3, 4, Rgb(1, 0, 1));
+//  spheres.emplace_back(Point3D(100, -300, 200), 100, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
+//  spheres.emplace_back(Point3D(300, 0, 100), 120, 0.3, 0.4, 0.3, 4, Rgb(1, 1, 1));
 }
 
 void InitPhong() {
@@ -111,10 +112,13 @@ int CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
   return intersection_idx;
 }
 
-void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& normal, Sphere3D sphere) {
+void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& normal, Sphere3D sphere, bool is_in_shadow) {
+  double obj_d = is_in_shadow ? 0 : sphere.D();
+  double obj_s = is_in_shadow ? 0 : sphere.S();
+
   Vec3D intersection_to_light = intersection_point.VecTo(light_location);
   phong.SetLight(light_color, intersection_to_light);
-  phong.SetObject(sphere.Color(), sphere.A(), sphere.D(), sphere.S(), sphere.Alpha());
+  phong.SetObject(sphere.Color(), sphere.A(), obj_d, obj_s, sphere.Alpha());
   Rgb shade = phong.GetShade(intersection_point, normal);
 
   // Set the color of the pixel
@@ -134,6 +138,23 @@ void clearImage() {
   }
 }
 
+bool PointInShadow(int sphere_index, Point3D start_point) {
+  Ray3D point_to_light(start_point, light_location);
+
+  for (int i = 0; i < spheres.size(); i++) {
+    // Don't try to intersect with out own sphere
+    if (i == sphere_index) { continue; }
+
+    Sphere3D sphere = spheres[i];
+    Point3D intersection_point(0,0,0);
+    Vec3D intersection_normal(0,0,0);
+    if (sphere.GetIntersection(point_to_light, intersection_point, intersection_normal)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void display() {
   clearImage();
 
@@ -145,8 +166,9 @@ void display() {
       Vec3D intersection_normal(0,0,0);
       int sphere_index = CastRay(ray, &intersection_point, &intersection_normal);
       if (sphere_index != -1) {
+        bool is_in_shadow = PointInShadow(sphere_index, intersection_point);
         // std::cout << "ray intersected\n";
-        SetImage(row, col, intersection_point, intersection_normal, spheres[sphere_index]);
+        SetImage(row, col, intersection_point, intersection_normal, spheres[sphere_index], is_in_shadow);
       }
     }
   }
@@ -166,6 +188,14 @@ void keyboard(unsigned char key, int x, int y) {
     distance -= 500;
   } else if (key == 's') {
     distance += 500;
+  } else if (key == 'h') {
+    light_location.setX(light_location.getX() - 20);
+  } else if (key == 'j') {
+    light_location.setY(light_location.getY() - 20);
+  } else if (key == 'k') {
+    light_location.setY(light_location.getY() + 20);
+  } else if (key == 'l') {
+    light_location.setX(light_location.getX() + 20);
   }
 
   InitPhong();
