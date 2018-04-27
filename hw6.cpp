@@ -76,23 +76,27 @@ void InitRays() {
   }
 }
 
+// Set up the list of sphere to render
 void InitSpheres() {
-  spheres.emplace_back(Point3D(0,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0, 1, 1));
+  spheres.emplace_back(Point3D(-200,0, 300), 200, 0.3, 0.4, 0.3, 4, Rgb(0, 1, 1));
   spheres.emplace_back(Point3D(0, -400, 600), 100, 0.3, 0.4, 0.3, 4, Rgb(1, 0, 1));
-  spheres.emplace_back(Point3D(100, 400, 50), 20, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
+  spheres.emplace_back(Point3D(100, 300, 50), 20, 0.3, 0.4, 0.3, 4, Rgb(0, 0, 1));
   spheres.emplace_back(Point3D(300, 0, 100), 120, 0.3, 0.4, 0.3, 4, Rgb(1, 1, 1));
+  spheres.emplace_back(Point3D(130, 200, 80), 30, 0.3, 0.4, 0.3, 4, Rgb(1, 0, 0));
 }
 
+// Initialize the phong camera
 void InitPhong() {
   phong.SetCamera(Point3D(0, 0, -1 * distance));
 }
 
-// Cast the ray until we reach the limit on any axis
+// Find the ray-sphere intersections
 int CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
   Point3D closest_intersection(0,0,std::numeric_limits<double>::max());
   Vec3D normal_of_closest(0,0,0);
   int intersection_idx = -1;
 
+  // Try to intersect every sphere to find one that does intersect
   for (int i = 0; i < spheres.size(); i++) {
     Sphere3D sphere = spheres[i];
     Point3D intersection_point(0,0,0);
@@ -115,6 +119,7 @@ int CastRay(const Ray3D& ray, Point3D* intersection, Vec3D* normal) {
   return intersection_idx;
 }
 
+// Calculates and sets the RGB color value of the image at pixel x,y
 void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& normal, Sphere3D sphere, bool is_in_shadow) {
   double obj_d = is_in_shadow ? 0 : sphere.D();
   double obj_s = is_in_shadow ? 0 : sphere.S();
@@ -131,7 +136,8 @@ void SetImage(int x, int y, const Point3D& intersection_point, const Vec3D& norm
   image[x][y][2] = denormed[2];
 }
 
-void clearImage() {
+// Clear the image for re-rendering
+void ClearImage() {
   for (int row = 0; row < kX; row++) {
     for (int col = 0; col < kY; col++) {
       image[row][col][0] = 0;
@@ -141,16 +147,18 @@ void clearImage() {
   }
 }
 
+// Determines if a point is in the shadow using shadow-casting
 bool PointInShadow(int sphere_index, Point3D start_point) {
   Ray3D point_to_light(start_point, light_location);
+  // we don't actually use the intersection point or the normal
+  Point3D intersection_point(0,0,0);
+  Vec3D intersection_normal(0,0,0);
 
   for (int i = 0; i < spheres.size(); i++) {
     // Don't try to intersect with out own sphere
     if (i == sphere_index) { continue; }
 
     Sphere3D sphere = spheres[i];
-    Point3D intersection_point(0,0,0);
-    Vec3D intersection_normal(0,0,0);
     if (sphere.GetIntersection(point_to_light, intersection_point, intersection_normal)) {
       return true;
     }
@@ -159,8 +167,9 @@ bool PointInShadow(int sphere_index, Point3D start_point) {
 }
 
 void display() {
-  clearImage();
+  ClearImage();
 
+  // Casts every ray for an intersection, then if it did check for if it is in the shadow and then set the image rgb
   for (int row = 0; row < kX; row++) {
     for (int col = 0; col < kY; col++) {
       Ray3D ray = rays[kX*row + col];
@@ -170,7 +179,6 @@ void display() {
       int sphere_index = CastRay(ray, &intersection_point, &intersection_normal);
       if (sphere_index != -1) {
         bool is_in_shadow = PointInShadow(sphere_index, intersection_point);
-        // std::cout << "ray intersected\n";
         SetImage(row, col, intersection_point, intersection_normal, spheres[sphere_index], is_in_shadow);
       }
     }
@@ -182,6 +190,7 @@ void display() {
   glFlush();
 }
 
+// Moves every sphere in the list
 void MoveSpheres(int x_amt, int y_amt, int z_amt) {
   for (int i = 0; i < spheres.size(); i++) {
     spheres[i].MoveSphere(x_amt, y_amt, z_amt);
