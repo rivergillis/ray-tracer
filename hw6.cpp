@@ -179,14 +179,28 @@ void display() {
   glFlush();
 }
 
+void MoveSpheres(int x_amt, int y_amt, int z_amt) {
+  for (int i = 0; i < spheres.size(); i++) {
+    spheres[i].MoveSphere(x_amt, y_amt, z_amt);
+  }
+}
+
 
 void keyboard(unsigned char key, int x, int y) {
   // End program
   if (key == 'q') {
     exit(0);
   } else if (key == 'w') {
-    distance -= 500;
+    MoveSpheres(0, 0, -20);
+  } else if (key == 'a') {
+    MoveSpheres(-20, 0, 0);
   } else if (key == 's') {
+    MoveSpheres(0, 0, 20);
+  } else if (key == 'd') {
+    MoveSpheres(20, 0, 0);
+  } else if (key == '-') {
+    distance -= 500;
+  } else if (key == '+') {
     distance += 500;
   } else if (key == 'h') {
     light_location.setX(light_location.getX() - 20);

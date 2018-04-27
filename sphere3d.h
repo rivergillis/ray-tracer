@@ -21,6 +21,8 @@ class Sphere3D
     double Alpha() const { return alpha_; }
     Rgb Color() const { return color_; }
 
+    void MoveSphere(int x_amt, int y_amt, int z_amt);
+
   private:
     Point3D center_;
     float radius_;

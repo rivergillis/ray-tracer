@@ -46,3 +46,9 @@ bool Sphere3D::GetIntersection(Ray3D ray, Point3D& point, Vec3D& normal) const {
   return true;
 
 }
+
+void Sphere3D::MoveSphere(int x_amt, int y_amt, int z_amt) {
+  center_.setX(center_.getX() + x_amt);
+  center_.setY(center_.getY() + y_amt);
+  center_.setZ(center_.getZ() + z_amt);
+}
