@@ -37,8 +37,8 @@
       <file leaf-file-name="hw6.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hw6.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
+            <state relative-caret-position="304">
+              <caret line="69" column="77" selection-start-line="69" selection-start-column="77" selection-end-line="69" selection-end-column="77" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -149,12 +149,12 @@
       <workItem from="1524416910439" duration="2470000" />
       <workItem from="1524422936040" duration="4300000" />
       <workItem from="1524453253765" duration="72000" />
-      <workItem from="1524843345704" duration="2485000" />
+      <workItem from="1524843345704" duration="2626000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10709000" />
+    <option name="totallyTimeSpent" value="10850000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="68" y="55" width="1332" height="778" extended-state="0" />
@@ -166,7 +166,7 @@
       <window_info anchor="bottom" id="CMake" order="7" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30837005" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.30837005" />
       <window_info id="Structure" order="1" sideWeight="0.5014881" side_tool="true" weight="0.2548148" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -611,8 +611,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hw6.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
+        <state relative-caret-position="304">
+          <caret line="69" column="77" selection-start-line="69" selection-start-column="77" selection-end-line="69" selection-end-column="77" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

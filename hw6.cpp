@@ -67,7 +67,8 @@ void InitRays() {
   rays.reserve(kX * kY);
   for (int row = 0; row < kX; row++) {
     for (int col = 0; col < kY; col++) {
-      std::pair<int, int> world_x_y = ImgToWorld(row, col);
+      // Swap the x and y here to make it correct for the rest of the program
+      std::pair<int, int> world_x_y = ImgToWorld(col, row);
       Point3D projection_point(world_x_y.first, world_x_y.second, kProjectionPlaneDistance);
 
       rays.emplace_back(camera, projection_point);
