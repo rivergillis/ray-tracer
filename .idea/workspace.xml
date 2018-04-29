@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05b3b836-ea87-4f7c-87aa-233869e8132b" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hw6.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/hw6.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -28,8 +29,8 @@
       <file leaf-file-name="hw6.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/hw6.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="87" column="30" lean-forward="true" selection-start-line="87" selection-start-column="30" selection-end-line="87" selection-end-column="30" />
+            <state relative-caret-position="1062">
+              <caret line="220" column="20" lean-forward="true" selection-start-line="220" selection-start-column="20" selection-end-line="220" selection-end-column="20" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -74,8 +75,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="68" />
-    <option name="y" value="55" />
+    <option name="x" value="100" />
+    <option name="y" value="110" />
     <option name="width" value="1332" />
     <option name="height" value="778" />
   </component>
@@ -87,6 +88,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -98,7 +100,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -141,15 +142,16 @@
       <workItem from="1524422936040" duration="4300000" />
       <workItem from="1524453253765" duration="72000" />
       <workItem from="1524843345704" duration="3645000" />
+      <workItem from="1524868899841" duration="313000" />
+      <workItem from="1524870966642" duration="619000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11869000" />
+    <option name="totallyTimeSpent" value="12801000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="68" y="55" width="1332" height="778" extended-state="0" />
-    <editor active="true" />
+    <frame x="100" y="110" width="1332" height="778" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4985119" visible="true" weight="0.259344" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -602,8 +604,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hw6.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="87" column="30" lean-forward="true" selection-start-line="87" selection-start-column="30" selection-end-line="87" selection-end-column="30" />
+        <state relative-caret-position="1062">
+          <caret line="220" column="20" lean-forward="true" selection-start-line="220" selection-start-column="20" selection-end-line="220" selection-end-column="20" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

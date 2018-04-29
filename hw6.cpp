@@ -12,11 +12,14 @@
 #include <cstdio>
 #include <cstdlib>
 #include <limits>
+#include <chrono>
 #ifdef MAC
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
+
+using Clock = std::chrono::high_resolution_clock;
 
 constexpr int kX = 800;
 constexpr int kY = 800;
@@ -167,6 +170,7 @@ bool PointInShadow(int sphere_index, Point3D start_point) {
 }
 
 void display() {
+  auto t1 = Clock::now();
   ClearImage();
 
   // Casts every ray for an intersection, then if it did check for if it is in the shadow and then set the image rgb
@@ -188,6 +192,9 @@ void display() {
   glClear(GL_COLOR_BUFFER_BIT);
   glDrawPixels(kX, kY, GL_RGB, GL_UNSIGNED_BYTE, image);
   glFlush();
+
+  auto t2 = Clock::now();
+  std::cout << "display() took " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms\n";
 }
 
 // Moves every sphere in the list
@@ -212,8 +219,10 @@ void keyboard(unsigned char key, int x, int y) {
     MoveSpheres(20, 0, 0);
   } else if (key == '-') {
     distance -= 500;
+    InitRays();
   } else if (key == '+') {
     distance += 500;
+    InitRays();
   } else if (key == 'h') {
     light_location.setX(light_location.getX() - 20);
   } else if (key == 'j') {
@@ -223,9 +232,6 @@ void keyboard(unsigned char key, int x, int y) {
   } else if (key == 'l') {
     light_location.setX(light_location.getX() + 20);
   }
-
-  InitPhong();
-  InitRays();
 
   // Display image
   glutPostRedisplay();
